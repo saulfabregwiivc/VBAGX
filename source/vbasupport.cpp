@@ -1194,7 +1194,7 @@ bool LoadVBAROM()
 		srcWidth = 240;
 		srcHeight = 160;
 		loaded = VMCPULoadROM();
-		soundSetSampleRate(16000); //32000 / 2
+		soundSetSampleRate(22050); //44100 / 2
 		cpuSaveType = 0;
 		if (loaded == 2) {
 			loaded = 0;
@@ -1228,7 +1228,7 @@ bool LoadVBAROM()
 		}
 
 		loaded = LoadGBROM();
-		soundSetSampleRate(32000);
+		soundSetSampleRate(44100);
 	}
 
 	if(!loaded)
