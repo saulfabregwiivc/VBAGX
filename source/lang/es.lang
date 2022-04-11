@@ -34,6 +34,9 @@ msgstr "Añadir Auto a archivos .SAV"
 msgid "Apr"
 msgstr "Abril"
 
+msgid "Reset this game? Any unsaved progress will be lost."
+msgstr "¿Reiniciar el juego? Se perderá cualquier progreso no guardado."
+
 msgid "Are you sure that you want to reset this game? Any unsaved progress will be lost."
 msgstr "¿Seguro que desea reiniciar el juego? Se perderá cualquier progreso no guardado."
 
@@ -155,7 +158,7 @@ msgid "Delete Saves"
 msgstr "Eliminar partidas"
 
 msgid "Delete this save file? Deleted files can not be restored."
-msgstr "¿Eliminar este archivo guardado?"
+msgstr "¿Eliminar este archivo guardado? Esto no se puede deshacer."
 
 msgid "Directory name is too long!"
 msgstr "¡El nombre del directorio es demasiado largo!"
@@ -164,7 +167,7 @@ msgid "Disabled"
 msgstr "Desactivado"
 
 msgid "Don't Save"
-msgstr "No"
+msgstr "No guardar"
 
 msgid "Down"
 msgstr "Abajo"
@@ -185,7 +188,7 @@ msgid "Error"
 msgstr "Error"
 
 msgid "Error - Invalid ZIP file!"
-msgstr "Error archivo ZIP inválido!"
+msgstr "Error - ¡Archivo ZIP inválido!"
 
 msgid "Error creating file!"
 msgstr "¡Error al crear el archivo!"
@@ -395,7 +398,7 @@ msgid "Nunchuk + Wiimote"
 msgstr "Wiimote y Nunchuk"
 
 msgid "Oct"
-msgstr "Obtubre"
+msgstr "Octubre"
 
 msgid "Off"
 msgstr "Desactivado"
@@ -455,7 +458,7 @@ msgid "Press any button on the Wiimote now. Press Home to clear the existing map
 msgstr "Presione cualquier botón en el Wiimote. Presione HOME para borrar la asignación existente."
 
 msgid "Press any button on the Wiimote or Nunchuk now. Press Home to clear the existing mapping."
-msgstr "Presione cualquier botón en el Wiimote o Nunchuck. Presione HOME para borrar la asignación existente."
+msgstr "Presione cualquier botón en el Wiimote o Nunchuk. Presione HOME para borrar la asignación existente."
 
 msgid "Preview Image"
 msgstr "Imagen de Previsualización"
@@ -557,7 +560,7 @@ msgid "Screenshots Folder"
 msgstr "Carpeta de Capturas"
 
 msgid "SD Card"
-msgstr "SD"
+msgstr "Tarjeta SD"
 
 msgid "SD card not found!"
 msgstr "¡Tarjeta SD no encontrada!"
@@ -665,7 +668,7 @@ msgid "USB drive not found!"
 msgstr "¡Unidad USB no encontrada!"
 
 msgid "USB Mass Storage"
-msgstr "USB"
+msgstr "Unidad USB"
 
 msgid "Vertical"
 msgstr "Vertical"
@@ -704,10 +707,10 @@ msgid "Emulation"
 msgstr "Emulación"
 
 msgid "European RGB (240i)"
-msgstr "Europa RGB (240i)"
+msgstr "RGB Europa (240i)"
 
 msgid "European RGB (240p)"
-msgstr "Europa RGB (240p)"
+msgstr "RGB Europa (240p)"
 
 msgid "Filtered (Auto)"
 msgstr "Filtrado (Automático)"
@@ -761,10 +764,10 @@ msgid "Main developer"
 msgstr "Desarrollador principal"
 
 msgid "Match Wii Controls"
-msgstr "Wiimote con Nunchuk"
+msgstr "Coincidir controles Wii"
 
 msgid "Monochrome Screen"
-msgstr "Pantalla monocroma"
+msgstr "Pantalla monocromática"
 
 msgid "NTSC (240p)"
 msgstr "NTSC (240p)"
@@ -794,7 +797,7 @@ msgid "Stretch to Fit"
 msgstr "Rellenar"
 
 msgid "Super Game Boy border"
-msgstr "Super Game Boy bordes"
+msgstr "Bordes Super Game Boy"
 
 msgid "This software is open source and may be copied,"
 msgstr "Este software es de código abierto y puede ser copiado,"
