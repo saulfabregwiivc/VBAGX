@@ -367,7 +367,7 @@ static void gbSoundReadGameOld(int version,gzFile gzFile)
 	if ( version >= 7 )
 		quality = utilReadInt( gzFile );
 
-	gbSoundSetSampleRate( 32000 / quality );
+	gbSoundSetSampleRate( 44100 / quality );
 
 	// Convert to format Gb_Apu uses
 	gb_apu_state_t& s = state.apu;
