@@ -87,7 +87,6 @@ GuiOptionBrowser::GuiOptionBrowser(int w, int h, OptionList * l)
 		optionBtn[i]->SetPosition(0,30*i+3);
 		optionBtn[i]->SetTrigger(trigA);
 		optionBtn[i]->SetTrigger(trig2);
-		optionBtn[i]->SetSoundClick(btnSoundClick);
 	}
 }
 
