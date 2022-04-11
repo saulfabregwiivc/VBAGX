@@ -92,14 +92,16 @@ void SetAudioRate(int type)
 }
 
 /****************************************************************************
- * AudioMode
+ * SwitchAudioMode
  *
- * Emulator sound
+ * Switches between menu sound and emulator sound
  ***************************************************************************/
 void
-AudioMode(int mode)
+SwitchAudioMode(int mode)
 {
-#ifndef NO_SOUND
+	if(mode == 0) // emulator
+	{
+		#ifndef NO_SOUND
 		ASND_Pause(1);
 		ASND_End();
 		AUDIO_StopDMA();
@@ -113,6 +115,18 @@ AudioMode(int mode)
 		DCFlushRange(soundbuffer[1],3840);
 		AUDIO_InitDMA((u32)soundbuffer[whichab],3200);
 		AUDIO_StartDMA();
+	}
+	else // menu
+	{
+		IsPlaying = 0;
+		#ifndef NO_SOUND
+		DSP_Unhalt();
+		ASND_Init();
+		ASND_Pause(0);
+		#else
+		AUDIO_StopDMA();
+		#endif
+	}
 }
 
 /****************************************************************************
