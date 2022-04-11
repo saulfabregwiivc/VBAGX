@@ -419,7 +419,7 @@ int main(int argc, char *argv[])
 			// since we're entering the menu
 			ResumeDeviceThread();
 
-			SwitchAudioMode(1);
+			AudioMode(1);
 
 			if(!ROMLoaded)
 				MainMenu(MENU_GAMESELECTION);
@@ -431,7 +431,7 @@ int main(int argc, char *argv[])
 		ConfigRequested = 0;
 		ScreenshotRequested = 0;
 
-		SwitchAudioMode(0);
+		AudioMode(0);
 
 		// stop checking if devices were removed/inserted
 		// since we're starting emulation again
