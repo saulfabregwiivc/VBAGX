@@ -539,8 +539,7 @@ mapperMBC5 gbDataMBC5 = {
   1, // ROM bank
   0, // RAM bank
   0, // ROM high address
-  0, // RAM address
-  0  // is rumble cartridge?
+  0 // RAM address
 };
 
 // MBC5 ROM write registers
@@ -583,18 +582,7 @@ void mapperMBC5ROM(u16 address, u8 value)
       gbMemoryMap[0x07] = &gbRom[tmpAddress + 0x3000];
     }
     break;
-  case 0x4000: // RAM bank select, plus rumble
-    // Some games support rumble, such as Disney Tarzan, but aren't on a
-	// rumble cartridge. As long as the RAM is less than or equal to 256Kbit
-	// we know that the last address line is not used for real RAM addresses,
-	// so it must be a rumble signal instead.
-    if(gbDataMBC5.isRumbleCartridge) {
-	  systemCartridgeRumble(value & 0x08);
-      value &= 0x07;
-	} else if (gbRamSizeMask <= 0x7FFF) {
-	  systemPossibleCartridgeRumble(value & 0x08);
-      value &= 0x07;
-    } else
+  case 0x4000: // RAM bank select
       value &= 0x0f;
     if(value == gbDataMBC5.mapperRAMBank)
       break;
