@@ -36,11 +36,6 @@ u32 MetroidZeroInput(unsigned short pad) {
 	u16 Health = CPUReadByte(0x3001536); // 0 = stand, 1 = crouch, 2 = ball
 	static u16 OldHealth = 0;
 
-	// Rumble when they lose health!
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
-
 	static int Morph = 0;
 #ifdef HW_RVL
 	static int AimCount = 0;
@@ -247,11 +242,6 @@ u32 MetroidFusionInput(unsigned short pad) {
 	u16 Health = CPUReadHalfWord(0x3001310); 
 	static u16 OldHealth = 0;
 
-	// Rumble when they lose health!
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
-
 	static int Morph = 0;
 	static int AimCount = 0;
 	static int MissileCount = 0;
@@ -431,11 +421,6 @@ u32 Metroid1Input(unsigned short pad) {
 	u16 Health = CPUReadHalfWord(0x3007306); // Binary Coded Decimal
 	static u16 OldHealth = 0;
 
-	// Rumble when they lose health!
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
-
 	static int Morph = 0;
 
 	if (BallState == 3) // Can't exit morph ball without pressing C!
@@ -546,11 +531,6 @@ u32 Metroid2Input(unsigned short pad) {
 #endif
 	u8 Health = gbReadMemory(0xD051); // Binary Coded Decimal
 	static u8 OldHealth = 0;
-
-	// Rumble when they lose (or gain) health! (since I'm not checking energy tanks)
-	if (Health != OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
 
 	static int Morph = 0;
 #ifdef HW_RVL

@@ -40,11 +40,6 @@ u32 MarioKartInput(unsigned short pad) {
 	static u8 OldHealth = 0;
 	float fraction;
 
-	// Rumble when they lose health!
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
-
 	// Start/Select
 	if (wp->btns_h & WPAD_BUTTON_PLUS)
 		J |= VBA_BUTTON_START;

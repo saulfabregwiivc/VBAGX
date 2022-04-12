@@ -32,12 +32,6 @@
 
 u32 LegoStarWars1Input(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
-	// Rumble when they lose health!
-	u8 Health = 0;
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -78,12 +72,6 @@ u32 LegoStarWars1Input(unsigned short pad) {
 
 u32 LegoStarWars2Input(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
-	// Rumble when they lose health!
-	u8 Health = 0;
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -128,12 +116,6 @@ u32 LegoStarWars2Input(unsigned short pad) {
 
 u32 SWObiWanInput(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
-	// Rumble when they lose health!
-	u8 Health = gbReadMemory(0xCFF2);
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -176,12 +158,6 @@ u32 SWObiWanInput(unsigned short pad) {
 
 u32 SWEpisode2Input(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
-	// Rumble when they lose health!
-	u8 Health = CPUReadByte(0x3002fb3);
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(6);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -225,11 +201,6 @@ u32 SWEpisode2Input(unsigned short pad) {
 u32 SWEpisode3Input(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
 	// Rumble when they lose health!
-	u8 Health = 0;//CPUReadByte(0x3002fb3);
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(6);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -277,12 +248,6 @@ u32 SWEpisode3Input(unsigned short pad) {
 
 u32 SWJediPowerBattlesInput(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
-	// Rumble when they lose health!
-	u8 Health = 0;//CPUReadByte(0x3002fb3);
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(6);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -330,12 +295,6 @@ u32 SWJediPowerBattlesInput(unsigned short pad) {
 
 u32 SWTrilogyInput(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
-	// Rumble when they lose health!
-	u8 Health = 0;//CPUReadByte(0x3002fb3);
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(6);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -383,12 +342,6 @@ u32 SWTrilogyInput(unsigned short pad) {
 
 u32 SWEpisode4Input(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
-	// Rumble when they lose health!
-	u8 Health = 0;
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(6);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -436,12 +389,6 @@ u32 SWEpisode4Input(unsigned short pad) {
 
 u32 SWEpisode5Input(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
-	// Rumble when they lose health!
-	u8 Health = 0;
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(6);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -489,12 +436,6 @@ u32 SWEpisode5Input(unsigned short pad) {
 
 u32 SWEpisode6Input(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
-	// Rumble when they lose health!
-	u8 Health = 0;
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(6);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -542,12 +483,6 @@ u32 SWEpisode6Input(unsigned short pad) {
 
 u32 SWYodaStoriesInput(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
-	// Rumble when they lose health!
-	u8 Health = 0;//gbReadMemory(0xD58A); // actually health bar progress
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(6);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -595,12 +530,6 @@ u32 SWYodaStoriesInput(unsigned short pad) {
 
 u32 SWNDAInput(unsigned short pad) {
 	u32 J = StandardMovement(pad) | DecodeGamecube(pad);
-	// Rumble when they lose health!
-	u8 Health = 0;
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(6);
-	OldHealth = Health;
 
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);

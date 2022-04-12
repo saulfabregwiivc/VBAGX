@@ -120,11 +120,6 @@ static int ChameleonChangeTime = 0;
 u32 GetMKInput(unsigned short pad, int rumbleTime=4) {
 	u32 J = StandardMovement(pad) | DecodeWiimote(pad);
     HP=0;LP=0;HK=0;LK=0;BL=0;Throw=0;CS=0;F=0;B=0;Select=0;Start=0;SpecialMove=0;
-
-	// Rumble when they lose health!
-	if (OurHealth < OurOldHealth)
-		systemGameRumble(rumbleTime);
-	OurOldHealth = OurHealth;
 		
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
@@ -240,11 +235,6 @@ u32 MK1Input(unsigned short pad) {
 	//u8 OpponentChar = gbReadMemory(0xD686);
 	u8 MenuChar = gbReadMemory(0xD61D)+1;
 	static u8 OldMenuChar = 0;
-	// Rumble when they change character
-	if (MenuChar != OldMenuChar) {
-		systemGameRumble(4);
-		OldMenuChar = MenuChar;
-	}
 	u32 J = GetMKInput(pad, 8);
 	if (LK || HK || BL) J |= VBA_BUTTON_A;
 	if (LP || HP || BL) J |= VBA_BUTTON_B;
@@ -603,16 +593,6 @@ u32 MK3Input(unsigned short pad) {
 	if (InSelectScreen) MenuChar = gbReadMemory(0xD4CE);
 		
 	static u8 OldMenuChar = 0;
-	// Rumble when they change character
-	if (MenuChar != OldMenuChar) {
-		if (InSelectScreen && !InGame) {
-			systemGameRumble(4);
-			MK3SetPal(1,MenuChar);
-			MK3RenameEveryoneProperlyExcept(255);
-			MenuSubChar=0;
-		}
-		OldMenuChar = MenuChar;
-	}
 
 	// Special Characters in-game
 	if (!InSelectScreen) {
@@ -718,7 +698,6 @@ u32 MK3Input(unsigned short pad) {
 	if (CostumeButton && !OldCostumeButton) {
 		int OldSubChar = MenuSubChar;
 		MenuSubChar = MK3SetSubchar(MenuChar, MenuSubChar+1, true);
-		if (MenuSubChar!=OldSubChar) systemGameRumble(8);
 	}
 	OldCostumeButton = CostumeButton;
 	//DebugPrintf("%d,%d C=%d M=%d", MenuChar,MenuSubChar,gbReadMemory(0xC0F0),gbReadMemory(0xCD00));
@@ -1614,7 +1593,6 @@ u32 MKAInput(unsigned short pad)
 		MenuChar = OurChar;
 		MenuSubchar = 0;
 		OriginalColour = CPUReadByte(0x2000004);
-		systemGameRumble(4);
 		MKARenameEveryoneProperlyExcept(255);
 	} else if (InMenu && OurChar!=OurOldChar) {
 		// Either changing character to Rain, or more likely starting combat
@@ -1698,7 +1676,6 @@ u32 MKAInput(unsigned short pad)
 		int OldSubChar = MenuSubchar;
 		u8 OldMaxFrame = CPUReadByte(0x2000048);
 		MenuSubchar = MKANextSubchar(MenuChar, MenuSubchar, OriginalColour);
-		if (MenuSubchar!=OldSubChar) systemGameRumble(8);
 		OurOldChar = CPUReadByte(0x2000025);
 		// apply change instantly and safely by skipping to last frame of new animation
 		gbaWriteByte(0x200001D,CPUReadByte(0x2000048)-1);

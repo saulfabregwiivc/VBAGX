@@ -229,13 +229,6 @@ u32 LinksAwakeningInput(unsigned short pad) // aka Zelda DX
 	if (CursorPos < 12)
 		SelItem = gbReadMemory(ItemsAddr + CursorPos);
 
-	// Rumble when they lose health!
-	u8 Health = gbReadMemory(0xDB5A);
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
-
 	bool ActionButton=0, SwordButton=0, ShieldButton=0, PullButton=0,
 	ItemsButton=0, QuestButton=0, MapButton=0, SpeedButton=0, CheatButton=0, MidnaButton=0,
 #ifdef HW_RVL
@@ -277,8 +270,6 @@ u32 LinksAwakeningInput(unsigned short pad) // aka Zelda DX
 			QuestScreen = false;
 		}
 		if (SwordCount>0) {
-			if (SwordCount == 50)
-				systemGameRumbleOnlyFor(50);
 			if (!OnItemScreen)
 				SwordButton = true;
 			SwordCount--;
@@ -334,13 +325,10 @@ u32 LinksAwakeningInput(unsigned short pad) // aka Zelda DX
 		if (QuestScreen && OnItemScreen) {
 			if (StartCount>=0) StartCount = -80;
 		} else {
-			if (OnItemScreen) systemGameRumble(5);
-			else {
 				// Unless they are trying to use 2 items at once, put away A item
 				if (!BItemButton && !UseLeftItemButton && !UseRightItemButton) {
 					if (!ZeldaDrawItem(0, ItemsAddr, 12)) // draw nothing if possible
 						ZeldaDrawItem(4, ItemsAddr, 12); // or draw shield
-				}
 			}
 			J |= VBA_BUTTON_A;
 		}
@@ -367,13 +355,10 @@ u32 LinksAwakeningInput(unsigned short pad) // aka Zelda DX
 	if (ShieldButton && OnItemScreen) {
 		if (SelItem==2 || SelItem==5) { // toggle bomb arrows
 			BombArrows = !BombArrows;
-			if (BombArrows) systemGameRumbleOnlyFor(16);
-			else systemGameRumbleOnlyFor(4);
 			if (SelItem==2 && BombArrows)
 				J |= VBA_BUTTON_A;
 		} else if (BombArrows) { // switch off bomb arrows
 			BombArrows = false;
-			systemGameRumbleOnlyFor(4);
 			J |= VBA_BUTTON_A;
 		}
 		QuestScreen = false;
@@ -389,7 +374,6 @@ u32 LinksAwakeningInput(unsigned short pad) // aka Zelda DX
 			BIsLeft = true;
 		}
 		if (OnItemScreen) {
-			systemGameRumbleOnlyFor(5);
 			J |= VBA_BUTTON_B;
 		} else {
 			u8 BButtonItem = gbReadMemory(ItemsAddr);
@@ -413,7 +397,6 @@ u32 LinksAwakeningInput(unsigned short pad) // aka Zelda DX
 			BIsLeft = false;
 		}
 		if (OnItemScreen) {
-			systemGameRumbleOnlyFor(5);
 			J |= VBA_BUTTON_B;
 		} else {
 			u8 BButtonItem = gbReadMemory(ItemsAddr);
@@ -435,21 +418,18 @@ u32 LinksAwakeningInput(unsigned short pad) // aka Zelda DX
 	if (LeftItemButton) {
 		if (OnItemScreen) ZeldaSwap(ZeldaDxLeftPos, CursorPos, ItemsAddr);
 		else ZeldaSwap(0, ZeldaDxLeftPos, ItemsAddr);
-		systemGameRumbleOnlyFor(5);
 		QuestScreen = false;
 	}
 	// Right Item
 	if (RightItemButton) {
 		if (OnItemScreen) ZeldaSwap(ZeldaDxRightPos, CursorPos, ItemsAddr);
 		else ZeldaSwap(0, ZeldaDxRightPos, ItemsAddr);
-		systemGameRumbleOnlyFor(5);
 		QuestScreen = false;
 	}
 	// Down Item
 	if (DownItemButton) {
 		if (OnItemScreen) ZeldaSwap(ZeldaDxDownPos, CursorPos, ItemsAddr);
 		else ZeldaSwap(0, ZeldaDxDownPos, ItemsAddr);
-		systemGameRumbleOnlyFor(5);
 		QuestScreen = false;
 	}
 	// B Item
@@ -464,7 +444,6 @@ u32 LinksAwakeningInput(unsigned short pad) // aka Zelda DX
 				 BombArrows = false;
 				 }
 				 }*/
-				systemGameRumble(5);
 				DelayCount = 10;
 			} else {
 				u8 BButtonItem = gbReadMemory(ItemsAddr);
@@ -486,7 +465,6 @@ u32 LinksAwakeningInput(unsigned short pad) // aka Zelda DX
 	// Talk to Midna, er... I mean save the game
 	if (MidnaButton) {
 		J |= VBA_BUTTON_A | VBA_BUTTON_B | VBA_BUTTON_START | VBA_BUTTON_SELECT;
-		systemGameRumbleOnlyFor(5);
 		QuestScreen = false;
 	}
 	// Map
@@ -542,15 +520,6 @@ static u32 ZeldaOracleInput(bool Seasons, unsigned short pad) {
 	// There is Zelda 1 & 2 for Wii VC wiimote but it doesn't make sense to use their controls,
 	// so let user choose sideways wiimote controls.
 	u32 J = StandardMovement(pad) | DecodeWiimote(pad);
-
-	// Rumble when they lose health!
-	u8 Health;
-	if (Seasons) Health = gbReadMemory(0xC6A2); // health in quarters... note C6A3 is max health
-	else Health = gbReadMemory(0xC6AA); // health in quarters... note C6AB is max health
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
 
 	static int DesiredSubscreen = -1;
 	int Subscreen = 0;
@@ -608,8 +577,6 @@ static u32 ZeldaOracleInput(bool Seasons, unsigned short pad) {
 		}
 		if (SwordCount>0)
 		{
-			if (SwordCount == 50)
-				systemGameRumbleOnlyFor(50);
 			if (!OnItemScreen)
 				SwordButton = true;
 			SwordCount--;
@@ -704,27 +671,23 @@ static u32 ZeldaOracleInput(bool Seasons, unsigned short pad) {
 		{
 			if (OnItemScreen) ZeldaSwap(2, CursorPos, ItemsAddr);
 			else ZeldaSwap(0, ZeldaDxLeftPos, ItemsAddr);
-			systemGameRumbleOnlyFor(5);
 		}
 		// Right Item
 		if (RightItemButton)
 		{
 			if (OnItemScreen) ZeldaSwap(4, CursorPos, ItemsAddr);
 			else ZeldaSwap(0, ZeldaDxRightPos, ItemsAddr);
-			systemGameRumbleOnlyFor(5);
 		}
 		// Down Item
 		if (DownItemButton)
 		{
 			if (OnItemScreen) ZeldaSwap(3, CursorPos, ItemsAddr);
 			else ZeldaSwap(0, ZeldaDxDownPos, ItemsAddr);
-			systemGameRumbleOnlyFor(5);
 		}
 	}
 	// B Item
 	if (BItemButton)
 	{
-		if (OnItemScreen) systemGameRumbleOnlyFor(5);
 		J |= VBA_BUTTON_B;
 	}
 #endif
@@ -746,7 +709,6 @@ static u32 ZeldaOracleInput(bool Seasons, unsigned short pad) {
 				BIsLeft = true;
 			}
 		}
-		if (OnItemScreen) systemGameRumbleOnlyFor(5);
 		J |= VBA_BUTTON_B;
 	}
 	if (UseRightItemButton)
@@ -765,7 +727,6 @@ static u32 ZeldaOracleInput(bool Seasons, unsigned short pad) {
 				BIsLeft = false;
 			}
 		}
-		if (OnItemScreen) systemGameRumbleOnlyFor(5);
 		J |= VBA_BUTTON_B;
 	}
 
@@ -897,13 +858,6 @@ u32 OracleOfSeasonsInput(unsigned short pad)
 u32 MinishCapInput(unsigned short pad)
 {
 	u32 J = StandardMovement(pad) | DecodeWiimote(pad);
-
-	// Rumble when they lose health!
-	u8 Health = CPUReadByte(0x2002aea);
-	static u8 OldHealth = 0;
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
 
 	static u8 SubscreenWanted = 0xFF;
 	static bool waiting = false;
@@ -1166,8 +1120,6 @@ u32 MinishCapInput(unsigned short pad)
 	if ((CursorRow == 0xFF || CursorCol == 0xFF) && (OldCursorRow == 0xFF || OldCursorCol == 0xFF)) {
 		// no change, still not pointing at anything
 	} else if (CursorVisible && (CursorRow != OldCursorRow || CursorCol != OldCursorCol)) {
-		// Cursor changed buttons, so rumble
-		//systemGameRumble(5);
 	}
 	OldCursorRow = CursorRow;
 	OldCursorCol = CursorCol;
@@ -1196,15 +1148,12 @@ u32 MinishCapInput(unsigned short pad)
 		if (RButtonAction==0x03) {
 			if (fabs(wp->exp.nunchuk.gforce.y)> 0.6) {
 				J |= VBA_BUTTON_R;
-				systemGameRumble(5);
 			}
 		// Spin attack
 		} else if (fabs(wp->exp.nunchuk.gforce.x)> 0.6 && !OnItemScreen) {
 			if (SwordCount<60) SwordCount=60;
 		}
 		if (SwordCount>0) {
-			if (SwordCount == 50)
-				systemGameRumbleOnlyFor(50);
 			if (!OnItemScreen)
 				SwordButton = true;
 			SwordCount--;
@@ -1388,7 +1337,6 @@ u32 MinishCapInput(unsigned short pad)
 	if ((Subscreen==0x2c && SelBox==16) || (Subscreen==0x38 && SelBox==5)) {
 		if (ActionButton) {
 			J |= VBA_BUTTON_A;
-			systemGameRumble(12);
 		}
 	} else if (Subscreen==0x2c) {
 	} else if (Subscreen==0x38 && SelBox==4) { // Sleep button returns to menu instead of sleep
@@ -1400,7 +1348,6 @@ u32 MinishCapInput(unsigned short pad)
 		// Action
 		if (ActionButton) {
 			J |= VBA_BUTTON_A;
-			//systemGameRumble(4);
 		}
 	} else {
 		// Action
@@ -1410,25 +1357,16 @@ u32 MinishCapInput(unsigned short pad)
 	// Right Item
 	if (RightItemButton || UseRightItemButton) {
 		J |= VBA_BUTTON_A;
-		if (Subscreen==0x2c) {
-			systemGameRumble(10);
-		}
 	}
 	// Down Item
 	if (Subscreen==0x38) {
 	} else {
 		if (BItemButton) {
 			J |= VBA_BUTTON_B;
-			if (Subscreen==0x2c) {
-				systemGameRumble(10);
-			}
 		}
 	}
 	if (DownItemButton || UseLeftItemButton) {
 		J |= VBA_BUTTON_B;
-		if (Subscreen==0x2c) {
-			systemGameRumble(10);
-		}
 	}
 	// Kinstone (doesn't work in items screen)
 	if (LeftItemButton && Subscreen != 0x2c)
@@ -1459,11 +1397,6 @@ u32 ALinkToThePastInput(unsigned short pad)
 	u8 Health = 0;
 	static u8 OldHealth = 0;
 
-	// Rumble when they lose health!
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
-
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
 
@@ -1479,7 +1412,6 @@ u32 ALinkToThePastInput(unsigned short pad)
 		if (fabs(wp->exp.nunchuk.gforce.x)> 0.6)
 		{ // Wiiuse bug!!! Not correct values
 			J |= VBA_BUTTON_B;
-			systemGameRumble(20);
 		}
 		// CAKTODO hold down attack button to do spin attack
 
@@ -1530,11 +1462,6 @@ u32 Zelda1Input(unsigned short pad)
 	u8 Health = 0;
 	static u8 OldHealth = 0;
 
-	// Rumble when they lose health!
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
-
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
 
@@ -1550,7 +1477,6 @@ u32 Zelda1Input(unsigned short pad)
 		if (fabs(wp->exp.nunchuk.gforce.x)> 0.6)
 		{ // Wiiuse bug!!! Not correct values
 			J |= VBA_BUTTON_A;
-			systemGameRumble(20);
 		}
 	}
 	// Use item
@@ -1596,11 +1522,6 @@ u32 Zelda2Input(unsigned short pad) {
 	u8 Health = 0;
 	static u8 OldHealth = 0;
 
-	// Rumble when they lose health!
-	if (Health < OldHealth)
-		systemGameRumble(20);
-	OldHealth = Health;
-
 #ifdef HW_RVL
 	WPADData * wp = WPAD_Data(pad);
 
@@ -1617,7 +1538,6 @@ u32 Zelda2Input(unsigned short pad) {
 		if (fabs(wp->exp.nunchuk.gforce.x)> 0.6)
 		{ // Wiiuse bug!!! Not correct values
 			J |= VBA_BUTTON_B;
-			systemGameRumble(20);
 		}
 	}
 	// Use item
