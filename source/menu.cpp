@@ -327,7 +327,6 @@ UpdateGUI (void *arg)
 			if(userInput[i].wpad->ir.valid)
 				Menu_DrawImg(userInput[i].wpad->ir.x-48, userInput[i].wpad->ir.y-48,
 					96, 96, pointer[i]->GetImage(), userInput[i].wpad->ir.angle, 1, 1, 255);
-			DoRumble(i);
 			--i;
 		} while(i>=0);
 		#endif
@@ -871,7 +870,6 @@ static void WindowCredits(void * ptr)
 		if(userInput[i].wpad->ir.valid)
 			Menu_DrawImg(userInput[i].wpad->ir.x-48, userInput[i].wpad->ir.y-48,
 				96, 96, pointer[i]->GetImage(), userInput[i].wpad->ir.angle, 1, 1, 255);
-			DoRumble(i);
 			--i;
 		} while(i >= 0);
 		#endif
@@ -1005,10 +1003,6 @@ static int MenuGameSelection()
 	mainWindow->Append(&preview);
 	ResumeGui();
 
-	#ifdef HW_RVL
-	ShutoffRumble();
-	#endif
-
 	// populate initial directory listing
 	selectLoadedFile = 1;
 	OpenGameList();
@@ -1061,9 +1055,6 @@ static int MenuGameSelection()
 				}
 				else
 				{
-					#ifdef HW_RVL
-					ShutoffRumble();
-					#endif
 					mainWindow->SetState(STATE_DISABLED);
 					SavePrefs(SILENT);
 					if(BrowserLoadFile())
@@ -3722,7 +3713,6 @@ static int MenuSettingsMenu()
 
 	sprintf(options.name[i++], "Exit Action");
 	sprintf(options.name[i++], "Wiimote Orientation");
-	sprintf(options.name[i++], "Rumble");
 	sprintf(options.name[i++], "Language");
 	sprintf(options.name[i++], "Preview Image");
 	options.length = i;
@@ -3780,9 +3770,6 @@ static int MenuSettingsMenu()
 				GCSettings.WiimoteOrientation ^= 1;
 				break;
 			case 2:
-				GCSettings.Rumble ^= 1;
-				break;
-			case 3:
 				GCSettings.language++;
 				
 				if(GCSettings.language == LANG_TRAD_CHINESE) // skip (not supported)
@@ -3790,7 +3777,7 @@ static int MenuSettingsMenu()
 				else if(GCSettings.language >= LANG_LENGTH)
 					GCSettings.language = LANG_JAPANESE;
 				break;			
-			case 4:
+			case 3:
 				GCSettings.PreviewImage++;
 				if(GCSettings.PreviewImage > 2)
 					GCSettings.PreviewImage = 0;
@@ -3819,7 +3806,6 @@ static int MenuSettingsMenu()
 				sprintf (options.value[0], "Reboot");
 
 			options.name[1][0] = 0; // Wiimote
-			options.name[2][0] = 0; // Rumble
 			#endif
 
 			if (GCSettings.WiimoteOrientation == 0)
@@ -3827,39 +3813,34 @@ static int MenuSettingsMenu()
 			else if (GCSettings.WiimoteOrientation == 1)
 				sprintf (options.value[1], "Horizontal");
 
-			if (GCSettings.Rumble == 1)
-				sprintf (options.value[2], "Enabled");
-			else
-				sprintf (options.value[2], "Disabled");
-
 			switch(GCSettings.language)
 			{
-				case LANG_JAPANESE:		sprintf(options.value[3], "Japanese"); break;
-				case LANG_ENGLISH:		sprintf(options.value[3], "English"); break;
-				case LANG_GERMAN:		sprintf(options.value[3], "German"); break;
-				case LANG_FRENCH:		sprintf(options.value[3], "French"); break;
-				case LANG_SPANISH:		sprintf(options.value[3], "Spanish"); break;
-				case LANG_ITALIAN:		sprintf(options.value[3], "Italian"); break;
-				case LANG_DUTCH:		sprintf(options.value[3], "Dutch"); break;
-				case LANG_SIMP_CHINESE:	sprintf(options.value[3], "Chinese (Simplified)"); break;
-				case LANG_TRAD_CHINESE:	sprintf(options.value[3], "Chinese (Traditional)"); break;
-				case LANG_KOREAN:		sprintf(options.value[3], "Korean"); break;
-				case LANG_PORTUGUESE:	sprintf(options.value[3], "Portuguese"); break;
-				case LANG_BRAZILIAN_PORTUGUESE: sprintf(options.value[3], "Brazilian Portuguese"); break;
-				case LANG_CATALAN:		sprintf(options.value[3], "Catalan"); break;
-				case LANG_TURKISH:		sprintf(options.value[3], "Turkish"); break;
+				case LANG_JAPANESE:		sprintf(options.value[2], "Japanese"); break;
+				case LANG_ENGLISH:		sprintf(options.value[2], "English"); break;
+				case LANG_GERMAN:		sprintf(options.value[2], "German"); break;
+				case LANG_FRENCH:		sprintf(options.value[2], "French"); break;
+				case LANG_SPANISH:		sprintf(options.value[2], "Spanish"); break;
+				case LANG_ITALIAN:		sprintf(options.value[2], "Italian"); break;
+				case LANG_DUTCH:		sprintf(options.value[2], "Dutch"); break;
+				case LANG_SIMP_CHINESE:	sprintf(options.value[2], "Chinese (Simplified)"); break;
+				case LANG_TRAD_CHINESE:	sprintf(options.value[2], "Chinese (Traditional)"); break;
+				case LANG_KOREAN:		sprintf(options.value[2], "Korean"); break;
+				case LANG_PORTUGUESE:	sprintf(options.value[2], "Portuguese"); break;
+				case LANG_BRAZILIAN_PORTUGUESE: sprintf(options.value[2], "Brazilian Portuguese"); break;
+				case LANG_CATALAN:		sprintf(options.value[2], "Catalan"); break;
+				case LANG_TURKISH:		sprintf(options.value[2], "Turkish"); break;
 			}
 	
 			switch(GCSettings.PreviewImage)
 			{
 				case 0:	
-					sprintf(options.value[4], "Screenshots"); 
+					sprintf(options.value[3], "Screenshots"); 
 					break; 
 				case 1:	
-					sprintf(options.value[4], "Covers");	  
+					sprintf(options.value[3], "Covers");	  
 					break; 
 				case 2:	
-					sprintf(options.value[4], "Artwork");
+					sprintf(options.value[3], "Artwork");
 					break; 
 			}
 			optionBrowser.TriggerUpdate();
@@ -4792,10 +4773,6 @@ MainMenu (int menu)
 		lastMenu = currentMenu;
 		usleep(THREAD_SLEEP);
 	}
-
-	#ifdef HW_RVL
-	ShutoffRumble();
-	#endif
 
 	CancelAction();
 	HaltGui();

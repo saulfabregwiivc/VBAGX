@@ -90,7 +90,6 @@ struct SGCSettings
 	int		WiiControls;   // Match Wii Game
 	int		WiimoteOrientation;
 	int		ExitAction;
-	int		Rumble;
 	int 	language;
 	int		PreviewImage;
 	int		AutoloadGame;

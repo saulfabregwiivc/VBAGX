@@ -204,7 +204,6 @@ preparePrefsData ()
 	createXMLSetting("WiimoteOrientation", "Wiimote Orientation", toStr(GCSettings.WiimoteOrientation));
 #endif
 	createXMLSetting("ExitAction", "Exit Action", toStr(GCSettings.ExitAction));
-	createXMLSetting("Rumble", "Rumble", toStr(GCSettings.Rumble));
 	createXMLSetting("language", "Language", toStr(GCSettings.language));
 	createXMLSetting("PreviewImage", "Preview Image", toStr(GCSettings.PreviewImage));
 
@@ -515,7 +514,6 @@ decodePrefsData ()
 
 			loadXMLSetting(&GCSettings.WiimoteOrientation, "WiimoteOrientation");
 			loadXMLSetting(&GCSettings.ExitAction, "ExitAction");
-			loadXMLSetting(&GCSettings.Rumble, "Rumble");
 			loadXMLSetting(&GCSettings.language, "language");
 			loadXMLSetting(&GCSettings.PreviewImage, "PreviewImage");
 
@@ -654,7 +652,6 @@ DefaultSettings ()
 	GCSettings.WiimoteOrientation = 0;
 	GCSettings.ExitAction = 0;
 	GCSettings.AutoloadGame = 0;
-	GCSettings.Rumble = 1;
 	GCSettings.PreviewImage = 0;
 	
 	GCSettings.BasicPalette = 0;

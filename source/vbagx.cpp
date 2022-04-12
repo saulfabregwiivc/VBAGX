@@ -80,9 +80,6 @@ static void ExitCleanup()
 
 void ExitApp()
 {
-#ifdef HW_RVL
-	ShutoffRumble();
-#endif
 
 	SavePrefs(SILENT);
 

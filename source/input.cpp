@@ -33,16 +33,8 @@
 
 #define ANALOG_SENSITIVITY 30
 
-int rumbleRequest[4] = {0,0,0,0};
 int playerMapping[4] = {0,1,2,3};
 GuiTrigger userInput[4];
-
-#ifdef HW_RVL
-static int rumbleCount[4] = {0,0,0,0};
-#endif
-
-static bool cartridgeRumble = false, possibleCartridgeRumble = false;
-static int gameRumbleCount = 0, menuRumbleCount = 0, rumbleCountAlready = 0;
 
 static unsigned int vbapadmap[10]; // VBA controller buttons
 u32 btnmap[6][10]; // button mapping
@@ -229,122 +221,7 @@ SetupPads()
 	}
 }
 
-/****************************************************************************
- * ShutoffRumble
- ***************************************************************************/
-void ShutoffRumble()
-{
-#ifdef HW_RVL
-	if(CONF_GetPadMotorMode() == 0)
-		return;
-	for(int i=0;i<4;i++)
-	{
-		WPAD_Rumble(i, 0);
-		rumbleCount[i] = 0;
-		rumbleRequest[i] = 0;
-	}
-#endif
-	PAD_ControlMotor(PAD_CHAN0, PAD_MOTOR_STOP);
-}
-
-/****************************************************************************
- * DoRumble
- ***************************************************************************/
-void DoRumble(int i)
-{
-#ifdef HW_RVL
-	if(CONF_GetPadMotorMode() == 0 || !GCSettings.Rumble) return;
-
-	if(rumbleRequest[i] && rumbleCount[i] < 3)
-	{
-		WPAD_Rumble(i, 1); // rumble on
-		rumbleCount[i]++;
-	}
-	else if(rumbleRequest[i])
-	{
-		rumbleCount[i] = 12;
-		rumbleRequest[i] = 0;
-	}
-	else
-	{
-		if(rumbleCount[i])
-			rumbleCount[i]--;
-		WPAD_Rumble(i, 0); // rumble off
-	}
-#endif
-}
-
 static int SilenceNeeded = 0;
-
-static void updateRumble()
-{
-	if(!GCSettings.Rumble) return;
-
-	bool r = false;
-	if (ConfigRequested) r = (menuRumbleCount > 0);
-	else r = cartridgeRumble || possibleCartridgeRumble || (gameRumbleCount > 0) || (menuRumbleCount > 0);
-
-	if (SilenceNeeded > 0)
-	{
-		if (r)
-		{
-			SilenceNeeded = 5;
-			// It will always be greater than 0 after that!
-			r = false;
-		}
-		else
-		{
-			if (--SilenceNeeded > 0) r = false;
-		}
-	}
-
-#ifdef HW_RVL
-	// Rumble wii remote 0
-	WPAD_Rumble(0, r);
-#endif
-	PAD_ControlMotor(PAD_CHAN0, r?PAD_MOTOR_RUMBLE:PAD_MOTOR_STOP);
-}
-
-void updateRumbleFrame()
-{
-	if(!GCSettings.Rumble) return;
-
-	// If we already rumbled continuously for more than 50 frames,
-	// then disable rumbling for a while.
-	if (rumbleCountAlready > 70) {
-		SilenceNeeded = 5;
-		rumbleCountAlready = 0;
-	} else if (ConfigRequested) {
-		if (menuRumbleCount>0) ++rumbleCountAlready;
-		else rumbleCountAlready=0;
-	} else {
-		if (gameRumbleCount>0 || menuRumbleCount>0 || possibleCartridgeRumble)
-			++rumbleCountAlready;
-		else rumbleCountAlready=0;
-	}
-	updateRumble();
-	if (gameRumbleCount>0 && !ConfigRequested) --gameRumbleCount;
-	if (menuRumbleCount>0) --menuRumbleCount;
-}
-
-void systemPossibleCartridgeRumble(bool RumbleOn) {
-	possibleCartridgeRumble = RumbleOn;
-	updateRumble();
-}
-
-void systemCartridgeRumble(bool RumbleOn) {
-	cartridgeRumble = RumbleOn;
-	possibleCartridgeRumble = false;
-	updateRumble();
-}
-
-void systemGameRumble(int RumbleForFrames) {
-	if (RumbleForFrames > gameRumbleCount) gameRumbleCount = RumbleForFrames;
-}
-
-void systemGameRumbleOnlyFor(int OnlyRumbleForFrames) {
-	gameRumbleCount = OnlyRumbleForFrames;
-}
 
 u32 StandardMovement(unsigned short chan)
 {
@@ -985,7 +862,6 @@ u32 GetJoy(int pad)
 	if (MenuRequested())
 	{
 		ScreenshotRequested = 1;
-		updateRumbleFrame();
 		return 0;
 	}
 
@@ -997,7 +873,6 @@ u32 GetJoy(int pad)
 		J &= ~16;
 	if ((J & 192) == 192)
 		J &= ~128;
-	updateRumbleFrame();
 
 	return J;
 }

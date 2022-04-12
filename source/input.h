@@ -32,16 +32,10 @@
 #define VBA_SPEED			1024
 #define VBA_CAPTURE			2048
 
-extern int rumbleRequest[4];
 extern int playerMapping[4];
 extern u32 btnmap[6][10];
 
 void ResetControls(int wc = -1);
-void ShutoffRumble();
-void DoRumble(int i);
-void systemGameRumble(int RumbleForFrames);
-void systemGameRumbleOnlyFor(int OnlyRumbleForFrames);
-void updateRumbleFrame();
 u32 GetJoy(int which);
 bool MenuRequested();
 void SetupPads();
