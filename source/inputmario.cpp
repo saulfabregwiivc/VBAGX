@@ -1,7 +1,7 @@
 /****************************************************************************
  * Visual Boy Advance GX
  *
- * Carl Kenner Febuary 2009
+ * Carl Kenner Febuary 2009 (updated 2022)
  *
  * gameinput.cpp
  *
