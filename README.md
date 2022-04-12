@@ -1,4 +1,4 @@
-# Visual Boy Advance GX (No GUI sound mod)
+# Visual Boy Advance GX (No GUI sound + No Rumble mod)
 https://github.com/dborth/vbagx (Under GPL License)
  
 Visual Boy Advance GX is a modified port of VBA-M.
