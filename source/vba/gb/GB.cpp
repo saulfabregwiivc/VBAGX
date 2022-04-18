@@ -4331,6 +4331,7 @@ bool gbUpdateSizes()
   case 0x1c:
   case 0x1d:
 	  case 0x1e:
+  }
 
   return true;
 }
@@ -5823,4 +5824,4 @@ bool MemgbReadBatteryFile(char * membuffer, int read)
 	}
 	systemSaveUpdateCounter = SYSTEM_SAVE_NOT_UPDATED;
 	return res;
-}
+} 
