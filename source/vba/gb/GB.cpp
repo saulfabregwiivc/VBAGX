@@ -4332,6 +4332,7 @@ bool gbUpdateSizes()
   case 0x1d:
 	  case 0x1e:
   }
+}
 
   return true;
 }
