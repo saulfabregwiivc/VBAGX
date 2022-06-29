@@ -17,7 +17,7 @@
 #include "utils/FreeTypeGX.h"
 
 #define APPNAME 		"Visual Boy Advance GX"
-#define APPVERSION 		"2.4.5"
+#define APPVERSION 		"2.4.6"
 #define APPFOLDER 		"vbagx"
 #define PREF_FILE_NAME 	"settings.xml"
 #define PAL_FILE_NAME 	"palettes.xml"
@@ -95,6 +95,7 @@ struct SGCSettings
 	int		Rumble;
 	int 	language;
 	int		PreviewImage;
+	int		TurboModeEnabled; // 0 - disabled, 1 - enabled
 	int		AutoloadGame;
 	
 	int		OffsetMinutesUTC; // Used for clock on MBC3 and TAMA5
