@@ -433,7 +433,7 @@ int main(int argc, char *argv[])
 
 		SwitchAudioMode(0);
 		
-		Settings.GBMaxSpriteTilesPerLine = (GCSettings.gbSpriteLimit ? 10 : 128);
+		GCSettings.GBMaxSpriteTilesPerLine = (GCSettings.gbSpriteLimit ? 10 : 128);
 
 		// stop checking if devices were removed/inserted
 		// since we're starting emulation again
