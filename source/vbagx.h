@@ -85,6 +85,7 @@ struct SGCSettings
 	int		render;		   // 0 - original, 1 - filtered, 2 - unfiltered
 	int		xshift;		   // video output shift
 	int		yshift;
+	int		gbSpriteLimit;
 	int		colorize;      // colorize Mono Gameboy games
 	int		gbaFrameskip;  // turn on auto-frameskip for GBA games
 	int		WiiControls;   // Match Wii Game
