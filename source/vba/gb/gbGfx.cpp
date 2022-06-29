@@ -631,7 +631,7 @@ void gbDrawSprites(bool draw)
         }
       }
       // sprite limit reached!
-      if(count >= Settings.MaxSpriteTilesPerLine)
+      if(count >= Settings.GBMaxSpriteTilesPerLine)
         break;
     }
   }
