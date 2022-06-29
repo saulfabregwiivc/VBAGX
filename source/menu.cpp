@@ -3095,6 +3095,7 @@ static int MenuSettingsVideo()
 	}
 	sprintf(options.name[i++], "Screen Position");
 	sprintf(options.name[i++], "Video Mode");
+	sprintf(options.name[i++], "GB Sprite Limit");
 	sprintf(options.name[i++], "GB Mono Colorization");
 	sprintf(options.name[i++], "GB Palette");
 	sprintf(options.name[i++], "GBA Frameskip");
@@ -3197,19 +3198,23 @@ static int MenuSettingsVideo()
 				if(GCSettings.videomode > 6)
 					GCSettings.videomode = 0;
 				break;
-
+			
 			case 6:
-				GCSettings.colorize ^= 1;
+				GCSettings.gbSpriteLimit ^= 1;
 				break;
 
 			case 7:
-				menu = MENU_GAMESETTINGS_PALETTE;
+				GCSettings.colorize ^= 1;
 				break;
 
 			case 8:
+				menu = MENU_GAMESETTINGS_PALETTE;
+				break;
+
+			case 9:
 				GCSettings.gbaFrameskip ^= 1;
 				break;
-			case 9:
+			case 10:
 				GCSettings.TurboModeEnabled ^= 1;
 				break;
 		}
@@ -3278,21 +3283,23 @@ static int MenuSettingsVideo()
 				case 6:
 					sprintf (options.value[5], "European RGB (240p)"); break;
 			}
+			
+			sprintf (options.value[6], "%s", GCSettings.gbSpriteLimit == 1 ? "On" : "Off");
 
 			if (GCSettings.colorize)
-				sprintf (options.value[6], "On");
+				sprintf (options.value[7], "On");
 			else
-				sprintf (options.value[6], "Off");
+				sprintf (options.value[7], "Off");
 
 			if(strcmp(CurrentPalette.gameName, "default"))
-				sprintf(options.value[7], "Custom");
+				sprintf(options.value[8], "Custom");
 			else
-				sprintf(options.value[7], "Default");
+				sprintf(options.value[8], "Default");
 
 			if (GCSettings.gbaFrameskip)
-				sprintf (options.value[8], "On");
+				sprintf (options.value[9], "On");
 			else
-				sprintf (options.value[8], "Off");
+				sprintf (options.value[9], "Off");
 			sprintf (options.value[9], "%s", GCSettings.TurboModeEnabled == 1 ? "On" : "Off");
 			optionBrowser.TriggerUpdate();
 		}
