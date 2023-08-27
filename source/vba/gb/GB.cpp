@@ -2652,6 +2652,9 @@ void gbReset()
   if (gbRomType >= 0x1c && gbRomType<=0x1e)
     gbDataMBC5.isRumbleCartridge = 1;
 
+  memset(&gbDataMBC7, 0, sizeof(gbDataMBC7));
+  gbDataMBC7.mapperROMBank = 1;
+
   memset(&gbDataHuC1, 0, sizeof(gbDataHuC1));
   gbDataHuC1.mapperROMBank = 1;
 
@@ -3544,6 +3547,7 @@ static bool gbWriteSaveState(gzFile gzFile)
   utilGzWrite(gzFile, &gbDataMBC2, sizeof(gbDataMBC2));
   utilGzWrite(gzFile, &gbDataMBC3, sizeof(gbDataMBC3));
   utilGzWrite(gzFile, &gbDataMBC5, sizeof(gbDataMBC5));
+  utilGzWrite(gzFile, &gbDataMBC7, sizeof(gbDataMBC7));
   utilGzWrite(gzFile, &gbDataHuC1, sizeof(gbDataHuC1));
   utilGzWrite(gzFile, &gbDataHuC3, sizeof(gbDataHuC3));
   utilGzWrite(gzFile, &gbDataTAMA5, sizeof(gbDataTAMA5));
@@ -3712,6 +3716,7 @@ static bool gbReadSaveState(gzFile gzFile)
   else
     utilGzRead(gzFile, &gbDataMBC3, sizeof(gbDataMBC3));
   utilGzRead(gzFile, &gbDataMBC5, sizeof(gbDataMBC5));
+  utilGzRead(gzFile, &gbDataMBC7, sizeof(gbDataMBC7));
   utilGzRead(gzFile, &gbDataHuC1, sizeof(gbDataHuC1));
   utilGzRead(gzFile, &gbDataHuC3, sizeof(gbDataHuC3));
   if(version>=11)
