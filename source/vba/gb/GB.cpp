@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <algorithm>
 
 #include "../System.h"
 #include "../NLS.h"
@@ -2655,6 +2656,9 @@ void gbReset()
   memset(&gbDataHuC1, 0, sizeof(gbDataHuC1));
   gbDataHuC1.mapperROMBank = 1;
 
+  memset(&gbDataMBC7, 0, sizeof(gbDataMBC7));
+  gbDataMBC7.mapperROMBank = 1;
+
   memset(&gbDataHuC3, 0, sizeof(gbDataHuC3));
   gbDataHuC3.mapperROMBank = 1;
 
@@ -4314,7 +4318,8 @@ bool gbUpdateSizes()
   }
 
   if(gbRamSize) {
-    gbRam = (u8 *)malloc(gbRamSize);
+    // Always allocate 4 KiB to prevent access issues down the line.
+    gbRam = (u8 *)malloc(std::max(4096, gbRamSize));
     memset(gbRam, gbRamFill, gbRamSize);
   }
 
