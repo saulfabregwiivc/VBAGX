@@ -2653,11 +2653,11 @@ void gbReset()
   if (gbRomType >= 0x1c && gbRomType<=0x1e)
     gbDataMBC5.isRumbleCartridge = 1;
 
-  memset(&gbDataHuC1, 0, sizeof(gbDataHuC1));
-  gbDataHuC1.mapperROMBank = 1;
-
   memset(&gbDataMBC7, 0, sizeof(gbDataMBC7));
   gbDataMBC7.mapperROMBank = 1;
+
+  memset(&gbDataHuC1, 0, sizeof(gbDataHuC1));
+  gbDataHuC1.mapperROMBank = 1;
 
   memset(&gbDataHuC3, 0, sizeof(gbDataHuC3));
   gbDataHuC3.mapperROMBank = 1;
@@ -2825,7 +2825,7 @@ void gbWriteSaveMBC7(const char * name)
       return;
     }
 
-    fwrite(&gbMemory[0xa000],
+    fwrite(gbRam,
            1,
            256,
            file);
@@ -3092,7 +3092,7 @@ bool gbReadSaveMBC7(const char * name)
       return false;
     }
 
-    size_t read = fread(&gbMemory[0xa000],
+    size_t read = fread(gbRam,
                      1,
                      256,
                      file);
@@ -3548,6 +3548,7 @@ static bool gbWriteSaveState(gzFile gzFile)
   utilGzWrite(gzFile, &gbDataMBC2, sizeof(gbDataMBC2));
   utilGzWrite(gzFile, &gbDataMBC3, sizeof(gbDataMBC3));
   utilGzWrite(gzFile, &gbDataMBC5, sizeof(gbDataMBC5));
+  utilGzWrite(gzFile, &gbDataMBC7, sizeof(gbDataMBC7));
   utilGzWrite(gzFile, &gbDataHuC1, sizeof(gbDataHuC1));
   utilGzWrite(gzFile, &gbDataHuC3, sizeof(gbDataHuC3));
   utilGzWrite(gzFile, &gbDataTAMA5, sizeof(gbDataTAMA5));
@@ -3716,6 +3717,7 @@ static bool gbReadSaveState(gzFile gzFile)
   else
     utilGzRead(gzFile, &gbDataMBC3, sizeof(gbDataMBC3));
   utilGzRead(gzFile, &gbDataMBC5, sizeof(gbDataMBC5));
+  utilGzRead(gzFile, &gbDataMBC7, sizeof(gbDataMBC7));
   utilGzRead(gzFile, &gbDataHuC1, sizeof(gbDataHuC1));
   utilGzRead(gzFile, &gbDataHuC3, sizeof(gbDataHuC3));
   if(version>=11)
@@ -4319,7 +4321,7 @@ bool gbUpdateSizes()
 
   if(gbRamSize) {
     // Always allocate 4 KiB to prevent access issues down the line.
-    gbRam = (u8 *)malloc(std::max(4096, gbRamSize));
+    gbRam = (u8 *)malloc(std::max(4096,gbRamSize));
     memset(gbRam, gbRamFill, gbRamSize);
   }
 
@@ -5549,7 +5551,7 @@ int MemgbWriteSaveMBC5(char * membuffer) {
 
 int MemgbWriteSaveMBC7(char * membuffer) {
 	if (gbRam) {
-		memcpy(membuffer, &gbMemory[0xa000], 256);
+		memcpy(membuffer, gbRam, 256);
 		return 256;
 	}
 	return 0;
@@ -5661,7 +5663,7 @@ bool MemgbReadSaveMBC7(char * membuffer, int read) {
 		if (read != 256)
 			return false;
 		else
-			memcpy(&gbMemory[0xa000], membuffer, read);
+			memcpy(gbRam, membuffer, read);
 		return true;
 	}
 	return false;
