@@ -432,6 +432,8 @@ int main(int argc, char *argv[])
 		ScreenshotRequested = 0;
 
 		SwitchAudioMode(0);
+		
+		GCSettings.GBMaxSpriteTilesPerLine = (GCSettings.gbSpriteLimit ? 10 : 40);
 
 		// stop checking if devices were removed/inserted
 		// since we're starting emulation again

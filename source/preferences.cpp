@@ -191,6 +191,7 @@ preparePrefsData ()
 	createXMLSetting("gbZoomVert", "GB Vertical Zoom Level", FtoStr(GCSettings.gbZoomVert));
 	createXMLSetting("gbFixed", "GB Fixed Pixel Ratio", toStr(GCSettings.gbFixed));
 	createXMLSetting("gbaFixed", "GBA Fixed Pixel Ratio", toStr(GCSettings.gbaFixed));
+	createXMLSetting("gbSpriteLimit", "GB Sprite Limit", toStr(GCSettings.gbSpriteLimit));
 	createXMLSetting("render", "Video Filtering", toStr(GCSettings.render));
 	createXMLSetting("scaling", "Aspect Ratio Correction", toStr(GCSettings.scaling));
 	createXMLSetting("xshift", "Horizontal Video Shift", toStr(GCSettings.xshift));
@@ -506,6 +507,7 @@ decodePrefsData ()
 			loadXMLSetting(&GCSettings.gbZoomHor, "gbZoomHor");
 			loadXMLSetting(&GCSettings.gbZoomVert, "gbZoomVert");
 			loadXMLSetting(&GCSettings.gbaFixed, "gbaFixed");
+			loadXMLSetting(&GCSettings.gbSpriteLimit, "gbSpriteLimit");
 			loadXMLSetting(&GCSettings.gbFixed, "gbFixed");
 			loadXMLSetting(&GCSettings.render, "render");
 			loadXMLSetting(&GCSettings.scaling, "scaling");
@@ -659,6 +661,7 @@ DefaultSettings ()
 	GCSettings.xshift = 0; // horizontal video shift
 	GCSettings.yshift = 0; // vertical video shift
 	GCSettings.colorize = 0; // Colorize mono gameboy games
+	GCSettings.gbSpriteLimit = 1; // Turn GB sprite limit on by default
 	GCSettings.gbaFrameskip = 1; // Turn auto-frameskip on for GBA games
 	GCSettings.TurboModeEnabled = 1; // Enabled by default
 
