@@ -68,6 +68,7 @@ extern int gbBorderLineSkip;
 extern int gbBorderRowSkip;
 extern int gbBorderColumnSkip;
 extern int gbDmaTicks;
+extern int gbMaxSpritesPerTile;
 
 extern void gbRenderLine();
 extern void gbDrawSprites(bool);

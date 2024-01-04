@@ -36,6 +36,7 @@ int gbBorderLineSkip = 160;
 int gbBorderRowSkip = 0;
 int gbBorderColumnSkip = 0;
 int gbDmaTicks = 0;
+int gbMaxSpritesPerTile = 10;
 
 u8 (*gbSerialFunction)(u8) = NULL;
 void (*sgbBorderListener)(bool) = NULL;

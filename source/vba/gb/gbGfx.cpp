@@ -602,7 +602,7 @@ void gbDrawSprites(bool draw)
     int yc = register_LY;
 
     int address = 0xfe00;
-    for(int i = 0; i < 40; i++) {
+    for(int i = 0; i < 40; i++) { // GB/GBC max 40 sprites
       y = gbMemory[address++];
       x = gbMemory[address++];
       int tile = gbMemory[address++];
@@ -631,7 +631,7 @@ void gbDrawSprites(bool draw)
         }
       }
       // sprite limit reached!
-      if(count >= GCSettings.GBMaxSpriteTilesPerLine)
+      if(count >= gbMaxSpritesPerTile)
         break;
     }
   }

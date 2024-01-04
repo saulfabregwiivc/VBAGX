@@ -1111,6 +1111,8 @@ bool LoadGBROM()
 	
 	if (GCSettings.SGBBorder == 2) LoadPNGBorder("default");
 
+	gbMaxSpritesPerTile = (GCSettings.gbSpriteLimit ? 10 : 40);
+
 	if(gbRomSize <= 0)
 		return false;
 
