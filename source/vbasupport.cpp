@@ -1061,7 +1061,6 @@ cleanup:
 }
 
 extern bool gbUpdateSizes();
-extern int gbMaxSpritesPerTile;
 
 bool LoadGBROM()
 {
