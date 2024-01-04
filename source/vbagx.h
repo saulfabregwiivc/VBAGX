@@ -1,7 +1,7 @@
 /****************************************************************************
  * Visual Boy Advance GX
  *
- * Tantric 2008-2022
+ * Tantric 2008-2023
  *
  * vbagx.h
  *
@@ -17,7 +17,7 @@
 #include "utils/FreeTypeGX.h"
 
 #define APPNAME 		"Visual Boy Advance GX"
-#define APPVERSION 		"2.4.6"
+#define APPVERSION 		"2.4.7"
 #define APPFOLDER 		"vbagx"
 #define PREF_FILE_NAME 	"settings.xml"
 #define PAL_FILE_NAME 	"palettes.xml"

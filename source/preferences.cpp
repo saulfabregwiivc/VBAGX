@@ -1,7 +1,7 @@
 /****************************************************************************
  * Visual Boy Advance GX
  *
- * Tantric 2008-2022
+ * Tantric 2008-2023
  *
  * preferences.cpp
  *
@@ -19,6 +19,7 @@
 #include "vbagx.h"
 #include "menu.h"
 #include "fileop.h"
+#include "video.h"
 #include "filebrowser.h"
 #include "input.h"
 #include "button_mapping.h"
@@ -102,7 +103,7 @@ static const char * XMLSaveCallback(mxml_node_t *node, int where)
 {
 	const char *name;
 
-	name = node->value.element.name;
+	name = mxmlGetElement(node);
 
 	if(where == MXML_WS_BEFORE_CLOSE)
 	{
@@ -129,7 +130,7 @@ static const char * XMLSavePalCallback(mxml_node_t *node, int where)
 {
 	const char *name;
 
-	name = node->value.element.name;
+	name = mxmlGetElement(node);
 
 	if(where == MXML_WS_BEFORE_CLOSE)
 	{
@@ -850,7 +851,9 @@ bool LoadPrefs()
 		FixInvalidSettings();
 
 	// attempt to create directories if they don't exist
-	if(GCSettings.LoadMethod == DEVICE_SD || GCSettings.LoadMethod == DEVICE_USB) {
+	if((GCSettings.LoadMethod == DEVICE_SD && ChangeInterface(DEVICE_SD, SILENT))
+		|| (GCSettings.LoadMethod == DEVICE_USB && ChangeInterface(DEVICE_USB, SILENT)))  
+	{
 		char dirPath[MAXPATHLEN];
 		sprintf(dirPath, "%s%s", pathPrefix[GCSettings.LoadMethod], GCSettings.ScreenshotsFolder);
 		CreateDirectory(dirPath);
@@ -858,6 +861,10 @@ bool LoadPrefs()
 		CreateDirectory(dirPath);
 		sprintf(dirPath, "%s%s", pathPrefix[GCSettings.LoadMethod], GCSettings.ArtworkFolder);
 		CreateDirectory(dirPath);
+	}
+
+	if(GCSettings.videomode > 0) {
+		ResetVideo_Menu();
 	}
 
 #ifdef HW_RVL
