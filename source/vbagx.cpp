@@ -37,6 +37,7 @@
 #include "utils/wiidrc.h"
 #include "utils/FreeTypeGX.h"
 
+#include "vba/gb/gbGlobals.h"
 #include "vba/gba/Globals.h"
 #include "vba/gba/Sound.h"
 
